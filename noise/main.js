@@ -60,72 +60,15 @@ class Arrow{
     }
 }
 
-for (let i = 0; i < arrowNbr; i++) {
-
-    arrows.push(new Arrow())        
-}
-
 
 function update(){
-    
-    
     requestAnimationFrame(update)
-
-    // now = Date.now()
-    // deltaTime =  now - lastTime
-    // lastTime = now
-    // position.add( velocity * deltaTime/expectedFPS )
-
-    ctx.beginPath()
-    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
-    ctx.closePath()
-    arrows.forEach(el => {
-
-        if (isClicked) {
-            el.x = easeInBounce(1, el.x, (clickX - el.x), 5, 1.70158)
-            el.y = easeInBounce(1, el.y, (clickY-el.y), 5, 1.70158)
-            el.x == clickX ? isClicked = false : isClicked = true
-        }
-        el._draw()
-        
-    });
-    
 }
 
-function checkDist(mouseX, mouseY, el){
-    let a = el.x - mouseX;
-    let b = el.y - mouseY;
-    let c = Math.sqrt( a*a + b*b );
+var simplex = new SimplexNoise()
+value2d = simplex.noise2D(150, 200)
 
-    return c
-}
 
-document.addEventListener('mousemove', function(e){
-    mouseX = e.pageX;
-    mouseY = e.pageY;
-    let rad = 0;
-    arrows.forEach(el => {
-        rad = Math.atan2(mouseX - el.x, mouseY-el.y); 
-        el.rotation = -rad + Math.PI;
-        el.vx = (mouseX - el.x) * el.ease
-        el.vy = (mouseY - el.y) * el.ease
-    });
-    // arrows.forEach(el => {
-    //     let dist = checkDist(mouseX, mouseY, el)
-    //     if (dist < 400) {
-    //         el.x += el.vx + el.dispersionX
-    //         el.y += el.vy + el.dispersionY
-    //         el.rotation += Math.PI
-    //     }
-    // });
-})
-
-document.addEventListener('click', function(e){
-    clickX = e.pageX;
-    clickY = e.pageY;
-    isClicked = true
-
-})
 update()
 
 const PI_M2 = Math.PI*2;
