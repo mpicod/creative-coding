@@ -25,7 +25,7 @@ class Particle{
 
     _draw(i){
         ctx.beginPath()
-        ctx.arc(this.x, this.y, 0, 0, 2 * Math.PI, false);
+        ctx.arc(this.x, this.y, 5, 0, 2 * Math.PI, false);
         ctx.fillStyle = this.color
         ctx.closePath()
         ctx.fill()
