@@ -101,7 +101,7 @@ function drawParticles(){
             p._rotate(closest.angle* Math.PI * 2)
             p._move(closest)
             p._draw()
-            // P._wrap()
+            p._wrap()
     });
 }
 function clear(){

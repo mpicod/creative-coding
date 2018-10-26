@@ -16,8 +16,8 @@ class Particle {
       // }
       // this.vel.add(this.acc);
       // this.pos.add(v)
-      this.pos.x += (v.x- this.pos.x)*this.vel.x/100
-      this.pos.y += (v.y-this.pos.y)*this.vel.y/100
+      this.pos.x += (this.pos.x - v.x)/this.pos.x*this.vel.x/10
+      this.pos.y += (this.pos.y - v.y)/this.pos.y*this.vel.y/10
       // if(this.vel.getLength() > 2) {
       //   this.vel.setLength(2);
       // }
