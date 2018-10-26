@@ -60,8 +60,15 @@
       this.dist = dist;
     }
     
-    _move() {
-      this.pos = this.pos.multiply(1.001)
+    _move(i, frequencyData) {
+      // this.vel.x = easeOutBounce(1, this.pos.x, 1, 5, 1.70158)
+      // this.vel.y = easeOutBounce(1, this.pos.y, 1, 5, 1.70158)
+      // this.pos.x = this.pos.x + this.vel.x
+      // this.pos.y = this.pos.y + this.vel.y
+      // let meshDist = frequencyData[i+this.dist]*2
+      // this.pos.x = O.x + Math.cos(this.angle) * (this.dist +meshDist);
+      // this.pos.y = O.y + Math.sin(this.angle)*(this.dist+ meshDist)
+      
     }
 
     _rotate(){
@@ -76,32 +83,33 @@
       this.scale = this.size*frequencyData[i]/255*10
     }
     
-    _draw(i, frequencyData, waveData) {
-      let meshDist =  (frequencyData[i+this.dist*2])
-      // console.log(meshDist)
-        ctx.save()
-        ctx.translate(O.x + Math.cos(this.angle) * this.dist + Math.cos(meshDist)*5, O.y + Math.sin(this.angle)*this.dist+ Math.sin(meshDist)*5)
-        ctx.rotate(this.angle+Math.PI/2)
-        ctx.scale(1 + this.scale, 1 + this.scale)
-        ctx.beginPath()
+    _draw(i, frequencyData) {
+      let meshDist = frequencyData[i+this.dist]*2
+
+      ctx.save()
+      ctx.translate(O.x + Math.cos(this.angle) * (this.dist +meshDist), O.y + Math.sin(this.angle)*(this.dist+meshDist))
+      ctx.rotate(this.angle+Math.PI/2)
+      ctx.scale(1 + this.scale, 1 + this.scale)
+      ctx.beginPath()
+
       // Create gradient
       let grd = ctx.createLinearGradient(70.000, 300.000, 230.000, 0.000);
       if (this.dist <= 100) {
       // Add colors
-      grd.addColorStop(0.000, 'rgba(81, 168, 255, 1.000)');
-      grd.addColorStop(0.201, 'rgba(117, 183, 255, 1.000)');
-      grd.addColorStop(0.705, 'rgba(168, 211, 255, 1.000)');
+      grd.addColorStop(0.000, `rgba(${81 +globalRed}, 168, 255, 1.000)`);
+      grd.addColorStop(0.201, `rgba(${117 +globalRed}, 183, 255, 1.000)`);
+      grd.addColorStop(0.705, `rgba(${168 +globalRed}, 211, 255, 1.000)`);
 
       }else if (this.dist <= 120) {
-        grd.addColorStop(0.050, 'rgba(181, 218, 255, 1.000)');
-        grd.addColorStop(0.817, 'rgba(193, 222, 255, 0.800)');
-        grd.addColorStop(1.000, 'rgba(211, 233, 255, 0.600)');
+        grd.addColorStop(0.050, `rgba(${181 +globalRed}, 218, 255, 1.000)`);
+        grd.addColorStop(0.817, `rgba(${193 +globalRed}, 222, 255, 0.800)`);
+        grd.addColorStop(1.000, `rgba(${221 +globalRed}, 233, 255, 0.600)`);
       }else{
       
         // Add colors
-        grd.addColorStop(0.050, 'rgba(196, 225, 255, 1.000)');
-        grd.addColorStop(1.000, 'rgba(214, 233, 255, 0.700)');
-        grd.addColorStop(1.000, 'rgba(229, 242, 255, 0.500)');
+        grd.addColorStop(0.050, `rgba(${196 +globalRed}, 225, 255, 1.000)`);
+        grd.addColorStop(1.000, `rgba(${214 +globalRed}, 233, 255, 0.700)`);
+        grd.addColorStop(1.000, `rgba(${229 +globalRed}, 242, 255, 0.500)`);
       }
       
         ctx.strokeStyle = `rgb(255, ${255 -51 * Math.PI/this.angle*Math.PI}, ${51 * Math.PI/this.angle*Math.PI})`

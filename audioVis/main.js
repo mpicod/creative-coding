@@ -9,6 +9,9 @@ let field = [];
 let noiseT = 0;
 let petales = [];
 let waves = [];
+let noisySpotsNbr = 100;
+let noisySpot = [];
+let globalRed = 0
 
 let mouseX, mouseY;
 let clickX, clickY;
@@ -37,6 +40,7 @@ function draw(){
     getWave()
     noiseT += 0.005
     clear()
+    drawNoisySpot()
     drawWave()
     drawPetales(frequencyData, waveData)
     // console.log(waveData)
@@ -60,6 +64,7 @@ function drawWave(){
         el._findKick(waveData)
         if (el.bounce == true) {
             el.radius = easeOutBounce(1, el.radius, 100, 5, 1.70158)
+            noisySpot = []
             console.log('BOUNCE')
         }
         if (el.radius > 2000) {
@@ -72,10 +77,26 @@ function drawWave(){
 function init(){
     columns = Math.round(w / size) + 1;
     rows = Math.round(h / size) + 1;
+    initNoisySpot()
     initShadow()
     initPetales()
 }
+function initNoisySpot(){
+    for (let i = 0; i < noisySpotsNbr; i++) {
+       noisySpot.push(new NoisySpot())
+       noisySpot[i]._draw()
+    }
+}
 
+function drawNoisySpot(){
+    let tryDraw = Math.random();
+    if (tryDraw > 0.9) {
+        noisySpot.push(new NoisySpot())
+    }
+    noisySpot.forEach(el => {
+        el._draw()
+    });
+}
 function clear(){
 
     ctx.clearRect(0, 0, w, h)
@@ -84,14 +105,13 @@ function clear(){
 
 
 function drawPetales(frequencyData, waveData){
-    let v = 100000;
-    let closest;
     petales.forEach((p,i) => {
+            // p.pos.x = easeOutBounce(1, p.pos.x, 100, 5, 1.70158)
+            // p.pos.y = easeOutBounce(1, p.pos.y, 100, 5, 1.70158)
             p._rotate()
             p._scale(i, frequencyData)
-            p._move()
+            p._move(i, frequencyData)
             p._draw(i, frequencyData)
-            // P._wrap()
     });
 }
 function clear(){
